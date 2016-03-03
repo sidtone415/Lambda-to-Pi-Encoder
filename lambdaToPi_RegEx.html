@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Search for an &lambda; in the next paragraph:</p>
+
+<p id="p01">&lambda;x.&lambda;y(x&lambda;z.z)z</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+<p id="out1"></P>
+<p id="out2"></P>
+
+<script>
+var variables = "abcdefghijklmno";
+var channels = "pqrstuvwxyz";
+
+function myFunction() {
+	var reg = /\u03BB[a-z]*/g;
+    var text = document.getElementById("p01").innerHTML;
+	var testArr;
+	
+	text = text.replace(/\.|\(|\)/g,"");
+	document.getElementById("out1").innerHTML = text;
+	testArr = text.match(reg);
+	
+	encodeToPi(testArr);
+	
+	//document.getElementById("out2").innerHTML = testArr;
+}
+
+function encodeToPi(arr) {
+	var reg1 = /[a-z]/;
+	var reg2 = /[a-z]{2,10}/i;
+	var piObj = new Object();
+	
+	document.getElementById("out2").innerHTML = arr;
+	for(var i=0; i < arr.length; i++){
+		if(reg2.exec(arr[i])){
+			console.log(reg2.exec(arr[i]));
+			//piObj[arr[i].value] = (varialbes.charAt(i).toUpper + '(' + ')' + channels.charAt(i));
+		}
+		else if(reg1.exec(arr[i])){
+			console.log(reg1.exec(arr[i]));
+			piObj[i] = {lam:arr[i], pi:variables[i].toUpper};
+			console.log(piObj[i]);
+		}
+	}
+	console.log(piObj);
+
+}
+</script>
+
+</body>
+</html>
