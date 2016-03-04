@@ -4,7 +4,7 @@
 
 <p>Search for an &lambda; in the next paragraph:</p>
 
-<p id="p01">&lambda;x.&lambda;y(x&lambda;z.z)z</p>
+<p id="p01">&lambda;x.&lambda;yx</p>
 
 <button onclick="myFunction()">Try it</button>
 
@@ -15,6 +15,7 @@
 <script>
 var variables = "abcdefghijklmno";
 var channels = "pqrstuvwxyz";
+var piObj = new Object();		// object to hold all information array or arrays
 
 function myFunction() {
 	var reg = /\u03BB[a-z]*/g;
@@ -25,30 +26,63 @@ function myFunction() {
 	document.getElementById("out1").innerHTML = text;
 	testArr = text.match(reg);
 	
-	encodeToPi(testArr);
-	
-	//document.getElementById("out2").innerHTML = testArr;
+	encodeToPi(testArr, testArr.length);
 }
 
-function encodeToPi(arr) {
-	var reg1 = /[a-z]/;
-	var reg2 = /[a-z]{2,10}/i;
-	var piObj = new Object();
+function encodeToPi(arr, n) {
+	var reg1 = /[a-z]/;			// tests for 1 variable
+	var reg2 = /[a-z]{2,10}/i;	// test for consectutive variables
+	var tVar, tChan, len;
+	
 	
 	document.getElementById("out2").innerHTML = arr;
-	for(var i=0; i < arr.length; i++){
-		if(reg2.exec(arr[i])){
-			console.log(reg2.exec(arr[i]));
-			//piObj[arr[i].value] = (varialbes.charAt(i).toUpper + '(' + ')' + channels.charAt(i));
+	console.log(n);
+	
+	/* recursive function statement 
+	if is base case traverses the array backwards */
+	if(n == 0){
+		console.log(piObj);
+		return;
+	}
+	else{
+		if(reg2.exec(arr[n-1])){
+			console.log(reg2.exec(arr[n-1]));
+			if((len=arr[n-1].length) > 1){
+				/* break down long lambda expressions into pi */
+				lambdaBreakdown(arr[n-1]);
+			}
+			/* same code as in the else if won't use but there for now */
+			tVar = "[" + variables[n-1].toUpperCase() + "]";
+			tChan = channels[n-1];
+			tVar = tVar.concat("("+tChan+")");
+			piObj[n-1] = {lam:arr[n-1], pi:tVar};
+			console.log(piObj[n-1]);
+			n = n-1;
+			encodeToPi(arr, n);
 		}
-		else if(reg1.exec(arr[i])){
-			console.log(reg1.exec(arr[i]));
-			piObj[i] = {lam:arr[i], pi:variables[i].toUpper};
-			console.log(piObj[i]);
+		else if(reg1.exec(arr[n-1])){
+			console.log(reg1.exec(arr[n-1]));
+			tVar = "[" + variables[n-1].toUpperCase() + "]";
+			tChan = channels[n-1];
+			tVar = tVar.concat("("+tChan+")");
+			piObj[n-1] = {lam:arr[n-1], pi:tVar};
+			console.log(piObj[n-1]);
+			n = n-1;
+			encodeToPi(arr, n);
 		}
 	}
-	console.log(piObj);
 
+}
+
+function lambdaBreakdown(lamExp){
+	/* another recursive setup to go through the
+	array backwards, need to finsih logic here */
+	if(lamExp.length == 0){
+		return;
+	}
+	else{
+		lamExp.lastIndexOf
+	}
 }
 </script>
 
