@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h3>&lambda; to Pi Translator:</h3>
+	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea>
+	<button onclick="myFunction()">Try it</button>
+	<p id="result">Equivalent Pi translation for given &lambda; expression is : </p>
+	
+	<script>
+	var channelArr = ["p","q","r","s","t"];
+	function myFunction() {	
+	
+	    var input = document.getElementById("input_exp").value;
+		var res = input.replace(/\.|\(|\)|\,/g, "");
+		var reg = /\u03BB[a-z]*/g;
+		var arr1 = res.match(reg);
+		
+		var piEx = convertToPi(arr1.toString(),0, null);
+		
+		var value = document.getElementById("result").innerHTML;
+		document.getElementById("result").innerHTML = value + piEx;
+			
+		//document.getElementById("out2").innerHTML = testArr;
+	}
+	function convertToPi(expr,channelIndex,result){
+		var result;
+		var piExpr;
+		if(/^[a-z]$/.test(expr)){
+			if(result == null){
+				result = expr + "!" + channelArr[channelIndex];
+			}else{
+				result = result + "." + expr + "!" + channelArr[channelIndex];
+			}
+			return result;
+		}
+		if(/^\u03BB[a-z]*/.test(expr)){
+			var n = expr.indexOf("\u03BB",1);
+			var res;
+			if(n == -1){
+				n = expr.indexOf("\u03BB",0);
+			}
+			
+			if(n == 0){
+				res = expr.slice(n+2, expr.length);
+			}else{
+				res = expr.slice(n, expr.length);
+			}
+			
+			
+			if(result == null){
+				result = channelArr[channelIndex] + "?" + expr.charAt(1) + "." +channelArr[channelIndex] + "?" + channelArr[channelIndex+1]; 
+			}else{
+				result = result + "." + channelArr[channelIndex] + "?" + expr.charAt(1) + "." +channelArr[channelIndex] + "?" + channelArr[channelIndex+1]; 
+			}
+			channelIndex = channelIndex + 1;
+			piExpr = convertToPi(res,channelIndex,result);	
+		}
+		return piExpr;
+	}
+	</script>
+</body>
+</html>
