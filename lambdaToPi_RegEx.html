@@ -49,7 +49,7 @@ function encodeToPi(arr, n) {
 			console.log(reg2.exec(arr[n-1]));
 			if((len=arr[n-1].length) > 1){
 				/* break down long lambda expressions into pi */
-				lambdaBreakdown(arr[n-1]);
+				lambdaBreakdown(arr[n-1], arr[n-1].length);
 			}
 			/* same code as in the else if won't use but there for now */
 			tVar = "[" + variables[n-1].toUpperCase() + "]";
@@ -74,14 +74,35 @@ function encodeToPi(arr, n) {
 
 }
 
-function lambdaBreakdown(lamExp){
+function lambdaBreakdown(lamExp, arrLen){
+	var tVar, tChan;
 	/* another recursive setup to go through the
 	array backwards, need to finsih logic here */
-	if(lamExp.length == 0){
+	console.log("lambdaBreakdown = # "+ arrLen);
+	if(arrLen == 0){
 		return;
 	}
 	else{
-		lamExp.lastIndexOf
+		if(lamExp.charAt(lamExp.arrLen-1) == lamExp.charAt(lamExp.arrLen-2) ){
+			console.log("recursive IF call: " + lamExp[arrLen-1]);
+			arrLen = arrLen-1;
+			lambdaBreakdown(lamExp,arrLen);
+			//tVar = "[" + variables[arrNum+10].toUpperCase() + "]";
+			//tChan = channels[arrNum+6];
+			//tVar = tVar.concat("("+tChan+")");
+			//piObj[arrNum-1] = {lam:arr[arrNum-1], pi:tVar};
+			//console.log(tVar);
+			//n = n-1;
+		}
+		else{
+			//tVar = "[" + variables[arrNum+6].toUpperCase() + "]";
+			//tChan = channels[arrNum+4];
+			//tVar = tVar.concat("("+tChan+")");
+			//console.log(tVar);
+			console.log("recursive ELSE call: " + lamExp[arrLen-1]);
+			arrLen = arrLen-1;
+			lambdaBreakdown(lamExp,arrLen);
+		}
 	}
 }
 </script>
