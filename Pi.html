@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h3>&lambda; to Pi Translator:</h3>
+	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea>
+	<button onclick="myFunction()">Try it</button>
+	<p id="result">Equivalent Pi translation for given &lambda; expression is : </p>
+	
+	<script>
+	var channelArr = ["p","q","r","s","t"];
+	var cArr2 = ["a","b","c","d","e","f"];
+	function myFunction() {	
+	
+	    var input = document.getElementById("input_exp").value;
+		
+		//couple regex for testing and removing
+		var res = input.replace(/\.|\(|\)|\,/gi, "");
+		var reg = /\u03BB[a-z]*/gi;
+		var reg2 = /\u03BB/gi;
+		
+		//check for valid input for lambda expression
+		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|^[a-z]$/gi)){
+			window.alert('Please enter a valid lambda expression, \u03BB followed by a variable\n'+
+			'Here are a couple examples of valid lambda expressions for reference\n' +
+			'\u03BBxx \n'+ 
+			'\u03BBx.x \n'+
+			'(\u03BBx)x \n');
+		}
+		else if(res.match(reg)&& res.match(reg2)){
+			var arr1 = res.match(reg);
+			
+			//lambda to pi function call
+			var piEx = convertToPi(arr1.toString(),0, null);
+		
+			//output of pi expression
+			var value = document.getElementById("result").innerHTML;
+			document.getElementById("result").innerHTML = value + piEx;
+		}
+	}
+	function convertToPi(expr,channelIndex,result){
+		var result;
+		var piExpr;
+		console.log("array being passed = "+expr);
+		console.log("result = " + result);
+		if(/^[a-z]$/i.test(expr)){
+			console.log("res ^[a-z]$ = "+res);
+			if(result == null){
+				result = expr + "!" + channelArr[channelIndex];
+			}
+			else if(result.match(/new/gi)){
+				result = result +"(("+ cArr2[channelIndex]+"?"+cArr2[channelIndex+1]+").["+expr+"!"+cArr2[channelIndex+1]+"])";
+			}
+			else{
+				result = result + "." + expr + "!" + channelArr[channelIndex];
+			}
+			return result;
+		}
+		// adding for testing to see if we can get application working
+		if(/^[a-z]{2,4}$/i.test(expr)){
+			var chanBeg = "new(";
+			var chanEnd = ").";
+			console.log(expr.length);
+			if(result != null){
+				res = expr.slice((expr.length-1), expr.length);
+				console.log("res [a-z][a-z]* = "+res);
+				result = chanBeg+cArr2[channelIndex-1]+chanEnd+chanBeg+cArr2[channelIndex]+chanEnd+"("+
+					"["+result+"]" + "(" + channelArr[channelIndex]+")|("+cArr2[expr.length-1]+"!"+cArr2[expr.length]+"."+
+					cArr2[expr.length-1]+"!"+channelArr[channelIndex]+")|*";
+					channelIndex = channelIndex + 1;
+				piExpr = convertToPi(res,channelIndex,result);
+			}
+			else{
+				return result; 
+			}
+		}
+		if(/^\u03BB[a-z]*/.test(expr)){ 
+			var n = expr.indexOf("\u03BB",1);
+			console.log("n = "+n);
+			var res, res2;
+			if(n == -1){
+				n = expr.indexOf("\u03BB",0);
+			}
+			if(n == 0){// && expr.length <= 3){
+				res = expr.slice(n+2, expr.length);
+			}
+			else{
+				res = expr.slice(n, expr.length);
+				console.log("res ^\u03BB[a-z]* = "+res);
+			}
+			
+			if(result == null){
+				result = channelArr[channelIndex] + "?" + expr.charAt(1) + "." +channelArr[channelIndex] + "?" + channelArr[channelIndex+1]; 
+			}else{
+				result = result + "." + channelArr[channelIndex] + "?" + expr.charAt(1) + "." +channelArr[channelIndex] + "?" + channelArr[channelIndex+1]; 
+			}
+			channelIndex = channelIndex + 1;
+			piExpr = convertToPi(res,channelIndex,result);	
+		}
+		return piExpr;
+	}
+	</script>
+</body>
+</html>
