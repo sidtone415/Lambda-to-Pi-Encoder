@@ -19,7 +19,7 @@
 		var reg2 = /^[a-z]$/gi;
 		
 		//check for valid input for lambda expression
-		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\/gi)){
+		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|(\u03BB[a-z]$)/gi)){
 			window.alert('Please enter a valid lambda expression, \u03BB followed by a variable\n'+
 			'Here are a couple examples of valid lambda expressions for reference\n' +
 			'\u03BBxx \n'+ 
@@ -29,10 +29,10 @@
 		else if(res.match(reg)|| res.match(reg2)){
 			var arr1;
 			if(res.match(reg)){
-			arr1 = res.match(reg);
+				arr1 = res.match(reg);
 			}
 			else{
-			arr1 = res.match(reg2);
+				arr1 = res.match(reg2);
 			}
 			
 			//lambda to pi function call
