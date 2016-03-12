@@ -2,14 +2,20 @@
 <html>
 <body>
 	<h3>&lambda; to Pi Translator:</h3>
+<<<<<<< HEAD
 	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea><br>
 	<button onclick="inputLam()">&lambda;</button><br>
 	<button onclick="myFunction()">Try it</button><button id="clear">Clear Input</button><br>
+=======
+	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea>
+	<button onclick="myFunction()">Try it</button>
+>>>>>>> origin/master
 	<p id="result">Equivalent Pi translation for given &lambda; expression is : </p>
 	
 	<script>
 	var channelArr = ["p","q","r","s","t"];
 	var cArr2 = ["a","b","c","d","e","f"];
+<<<<<<< HEAD
 	var input = document.querySelector('#clear');
 	var textarea = document.querySelector('#input_exp');
 
@@ -23,6 +29,8 @@
 		console.log(val.innerHTML);
 	}
 	
+=======
+>>>>>>> origin/master
 	function myFunction() {	
 	
 	    var input = document.getElementById("input_exp").value;
@@ -30,16 +38,24 @@
 		//couple regex for testing and removing
 		var res = input.replace(/\.|\(|\)|\,/gi, "");
 		var reg = /\u03BB[a-z]*/gi;
+<<<<<<< HEAD
 		var reg2 = /^[a-z]$/gi;
 		
 		//check for valid input for lambda expression
 		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|(\u03BB[a-z]$)|(^[a-z]{2}$)/gi)){
+=======
+		var reg2 = /\u03BB/gi;
+		
+		//check for valid input for lambda expression
+		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|^[a-z]$/gi)){
+>>>>>>> origin/master
 			window.alert('Please enter a valid lambda expression, \u03BB followed by a variable\n'+
 			'Here are a couple examples of valid lambda expressions for reference\n' +
 			'\u03BBxx \n'+ 
 			'\u03BBx.x \n'+
 			'(\u03BBx)x \n');
 		}
+<<<<<<< HEAD
 		else if(res.match(reg)|| res.match(reg2)){
 			var arr1;
 			if(res.match(reg)){
@@ -48,6 +64,10 @@
 			else{
 				arr1 = res.match(reg2);
 			}
+=======
+		else if(res.match(reg)&& res.match(reg2)){
+			var arr1 = res.match(reg);
+>>>>>>> origin/master
 			
 			//lambda to pi function call
 			var piEx = convertToPi(arr1.toString(),0, null);
@@ -55,7 +75,10 @@
 			//output of pi expression
 			var value = document.getElementById("result").innerHTML;
 			document.getElementById("result").innerHTML = value + piEx;
+<<<<<<< HEAD
 			value.reset();
+=======
+>>>>>>> origin/master
 		}
 	}
 	function convertToPi(expr,channelIndex,result){
