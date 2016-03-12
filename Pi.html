@@ -10,7 +10,10 @@
 	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea>
 	<button onclick="myFunction()">Try it</button>
 >>>>>>> origin/master
-	<p id="result">Equivalent Pi translation for given &lambda; expression is : </p>
+	<div>
+		<span id="result">Equivalent Pi translation for given &lambda; expression is : </span>
+		<span id="pi_expr"></span>
+	</div>
 	
 	<script>
 	var channelArr = ["p","q","r","s","t"];
@@ -74,7 +77,7 @@
 		
 			//output of pi expression
 			var value = document.getElementById("result").innerHTML;
-			document.getElementById("result").innerHTML = value + piEx;
+			document.getElementById("pi_expr").innerHTML = piEx;
 <<<<<<< HEAD
 			value.reset();
 =======
