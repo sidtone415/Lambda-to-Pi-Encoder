@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html>
-<body>
-	<h3>&lambda; to Pi Translator:</h3>
-	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea><br>
-	<button onclick="inputLam()">&lambda;</button><br>
+<h3>
+	&lambda; to Pi Translator:
+</h3>
+<p>
+	<p> ** Please enter '\' in place of &lambda; in the input expression</p>
+	<textarea id="input_exp" style = "padding:0px" onKeyUp="edValueKeyPress()" placeholder="Write your input expression here..." rows="4" cols="50">
+	</textarea><br>
+	<br>
 	<button onclick="myFunction()">Try it</button><button id="clear">Clear Input</button><br>
-	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea>
-	<button onclick="myFunction()">Try it</button>
-	<div>
-		<span id="result">Equivalent Pi translation for given &lambda; expression is : </span>
-		<span id="pi_expr"></span>
-	</div>
-	
-	<script>
+	<br>
+</p>
+<div>
+	<span id="hideenText" hidden></span>
+	<span id="result">Equivalent Pi translation for given &lambda; expression is :</span> <span id="pi_expr"></span>
+</div><script type="text/javascript">
 	var channelArr = ["p","q","r","s","t"];
 	var cArr2 = ["a","b","c","d","e","f"];
 	var input = document.querySelector('#clear');
@@ -20,12 +20,15 @@
 
 	input.addEventListener('click', function () {
 	textarea.value = "";
+	document.getElementById("pi_expr").innerHTML = "";	
 	}, false);
-	
-	function inputLam(){
-		var val = document.getElementById("input_exp");
-		val.innerHTML += "\u03BB";
-		console.log(val.innerHTML);
+
+	function edValueKeyPress()
+	{
+	    var inputExpr = document.getElementById("input_exp").value;	
+		var lambdaExpr = inputExpr.replace(/\\/g, "&lambda;");
+		document.getElementById("hideenText").innerHTML= lambdaExpr;
+		document.getElementById("input_exp").value= document.getElementById("hideenText").innerHTML;
 	}
 	
 	function myFunction() {	
@@ -39,10 +42,6 @@
 		
 		//check for valid input for lambda expression
 		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|(\u03BB[a-z]$)|(^[a-z]{2}$)/gi)){
-		var reg2 = /\u03BB/gi;
-		
-		//check for valid input for lambda expression
-		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|^[a-z]$/gi)){
 			window.alert('Please enter a valid lambda expression, \u03BB followed by a variable\n'+
 			'Here are a couple examples of valid lambda expressions for reference\n' +
 			'\u03BBxx \n'+ 
@@ -57,18 +56,16 @@
 			else{
 				arr1 = res.match(reg2);
 			}
-		else if(res.match(reg)&& res.match(reg2)){
-			var arr1 = res.match(reg);
-			
 			//lambda to pi function call
 			var piEx = convertToPi(arr1.toString(),0, null);
 		
 			//output of pi expression
 			var value = document.getElementById("result").innerHTML;
 			document.getElementById("pi_expr").innerHTML = piEx;
-			value.reset();
+			//value.reset();
 		}
 	}
+	
 	function convertToPi(expr,channelIndex,result){
 		var result;
 		var piExpr;
@@ -130,6 +127,4 @@
 		}
 		return piExpr;
 	}
-	</script>
-</body>
-</html>
+</script>
