@@ -2,13 +2,27 @@
 <html>
 <body>
 	<h3>&lambda; to Pi Translator:</h3>
-	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea>
-	<button onclick="myFunction()">Try it</button>
+	<textarea id="input_exp" placeholder="Write your input expression here..." rows="4" cols="50"></textarea><br>
+	<button onclick="inputLam()">&lambda;</button><br>
+	<button onclick="myFunction()">Try it</button><button id="clear">Clear Input</button><br>
 	<p id="result">Equivalent Pi translation for given &lambda; expression is : </p>
 	
 	<script>
 	var channelArr = ["p","q","r","s","t"];
 	var cArr2 = ["a","b","c","d","e","f"];
+	var input = document.querySelector('#clear');
+	var textarea = document.querySelector('#input_exp');
+
+	input.addEventListener('click', function () {
+	textarea.value = "";
+	}, false);
+	
+	function inputLam(){
+		var val = document.getElementById("input_exp");
+		val.innerHTML += "\u03BB";
+		console.log(val.innerHTML);
+	}
+	
 	function myFunction() {	
 	
 	    var input = document.getElementById("input_exp").value;
@@ -19,7 +33,7 @@
 		var reg2 = /^[a-z]$/gi;
 		
 		//check for valid input for lambda expression
-		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|(\u03BB[a-z]$)/gi)){
+		if(res.match(/\d+|\!|\@|\#|\$|\%|\^|\&|\*|\_|\-|\=|\+|\~|\`|\{|\}|\\|(\u03BB[a-z]$)|(^[a-z]{2}$)/gi)){
 			window.alert('Please enter a valid lambda expression, \u03BB followed by a variable\n'+
 			'Here are a couple examples of valid lambda expressions for reference\n' +
 			'\u03BBxx \n'+ 
@@ -41,6 +55,7 @@
 			//output of pi expression
 			var value = document.getElementById("result").innerHTML;
 			document.getElementById("result").innerHTML = value + piEx;
+			value.reset();
 		}
 	}
 	function convertToPi(expr,channelIndex,result){
